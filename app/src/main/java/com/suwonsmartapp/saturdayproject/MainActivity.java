@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button = (Button) findViewById(R.id.button);
         mTextView = (TextView) findViewById(R.id.text_view2);
 
-        // 1
+        // 1 첫번째
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
