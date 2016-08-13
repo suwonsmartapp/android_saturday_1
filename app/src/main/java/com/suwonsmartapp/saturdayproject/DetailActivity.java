@@ -21,8 +21,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        Intent intent = getIntent();
+        findViewById(R.id.res).setOnClickListener(this);
 
+        Intent intent = getIntent();
         if(intent != null) {
             String id = intent.getStringExtra("id");
             String password = intent.getStringExtra("password");

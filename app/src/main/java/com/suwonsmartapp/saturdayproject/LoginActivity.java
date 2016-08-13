@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 /**
@@ -14,7 +15,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText mIdEditText;
     private EditText mPassWord;
+    private EditText mConfirm;
     private EditText mEmail;
+    private RadioButton mRadioMale;
     static final int RESULT_REQUEST = 1;
 
     @Override
@@ -22,12 +25,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mIdEditText = (EditText) findViewById(R.id.id_edit);
-        mPassWord = (EditText) findViewById(R.id.password_edit);
-        mEmail = (EditText) findViewById(R.id.email);
-
         findViewById(R.id.apply).setOnClickListener(this);
         findViewById(R.id.init).setOnClickListener(this);
+
+        mIdEditText = (EditText) findViewById(R.id.id_edit);
+        mPassWord = (EditText) findViewById(R.id.password_edit);
+        mConfirm = (EditText) findViewById(R.id.password_confirm);
+        mEmail = (EditText) findViewById(R.id.email);
+        mRadioMale = (RadioButton) findViewById(R.id.radio_male);
     }
 
     @Override
@@ -37,15 +42,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(LoginActivity.this, "초기화 하겠습니다", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.apply:
-//                Toast.makeText(LoginActivity.this, "가입합니다", Toast.LENGTH_SHORT).show();
+                if( !mPassWord.getText().toString().equals(mConfirm.getText().toString())  ){
+                    Toast.makeText(LoginActivity.this, "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(this, DetailActivity.class);
 
-                Intent intent = new Intent(LoginActivity.this, DetailActivity.class);
-                intent.putExtra("id", mIdEditText.getText().toString());
-                intent.putExtra("password", mPassWord.getText().toString());
-                intent.putExtra("email", mEmail.getText().toString());
-                intent.putExtra("gender", "남성");
+                    intent.putExtra("id", mIdEditText.getText().toString());
+                    intent.putExtra("password", mPassWord.getText().toString());
+                    intent.putExtra("email", mEmail.getText().toString());
+                    intent.putExtra("gender", mRadioMale.isChecked() ? "남성" : "여성");
 
-                startActivityForResult(intent, RESULT_REQUEST);
+                    startActivityForResult(intent, RESULT_REQUEST);
+                }
                 break;
         }
     }

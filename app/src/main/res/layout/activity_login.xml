@@ -10,6 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LoginActivity">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1" >
+
+
     <EditText
         android:id="@+id/id_edit"
         android:layout_width="match_parent"
@@ -39,6 +47,7 @@
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
         android:hint="이메일" />
 
     <RadioGroup
@@ -47,16 +56,23 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:layout_width="wrap_content"
+            android:id="@+id/radio_male"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
             android:text="남성"/>
 
         <RadioButton
-            android:layout_width="wrap_content"
+            android:id="@+id/radio_female"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="여성"/>
 
     </RadioGroup>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,13 +81,15 @@
 
     <Button
         android:id="@+id/init"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="초기화" />
 
     <Button
         android:id="@+id/apply"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="가입" />
 
