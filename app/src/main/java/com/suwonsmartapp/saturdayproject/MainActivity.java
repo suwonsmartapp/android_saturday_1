@@ -1,5 +1,6 @@
 package com.suwonsmartapp.saturdayproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.button:
                 mTextView.setText("버튼 눌림");
+
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
             case R.id.text_view1:
                 break;
