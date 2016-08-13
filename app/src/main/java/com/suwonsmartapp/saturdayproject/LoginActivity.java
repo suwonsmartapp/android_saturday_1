@@ -15,6 +15,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText mIdEditText;
     private EditText mPassWord;
     private EditText mEmail;
+    static final int RESULT_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +40,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                Toast.makeText(LoginActivity.this, "가입합니다", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(LoginActivity.this, DetailActivity.class);
-//                intent.putExtra("id", mIdEditText.getText().toString());
-//                intent.putExtra("password", mPassWord.getText().toString());
-//                intent.putExtra("email", mEmail.getText().toString());
+                intent.putExtra("id", mIdEditText.getText().toString());
+                intent.putExtra("password", mPassWord.getText().toString());
+                intent.putExtra("email", mEmail.getText().toString());
+                intent.putExtra("gender", "남성");
 
-                startActivity(intent);
+                startActivityForResult(intent, RESULT_REQUEST);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == RESULT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+                String result = data.getStringExtra("result");
+
+                Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
