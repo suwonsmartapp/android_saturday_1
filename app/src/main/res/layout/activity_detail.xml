@@ -10,7 +10,7 @@
     tools:context="com.suwonsmartapp.saturdayproject.DetailActivity">
 
     <Button
-        android:text="실수"
+        android:text="결과 돌려주기"
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

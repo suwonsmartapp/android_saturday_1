@@ -18,16 +18,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mIdEditText = (EditText) findViewById(R.id.id_edit);
         findViewById(R.id.login_button).setOnClickListener(this);
-
-        if (getIntent() != null) {
-            Toast.makeText(LoginActivity.this, getIntent().getStringExtra("result"), Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("id", mIdEditText.getText().toString());
-        startActivity(intent);
+        startActivityForResult(intent, 1000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == 1000) {
+            Toast.makeText(LoginActivity.this, data.getStringExtra("result"), Toast.LENGTH_SHORT).show();
+        }
     }
 }

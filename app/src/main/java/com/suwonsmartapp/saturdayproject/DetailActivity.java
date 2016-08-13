@@ -25,6 +25,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("result", "id 잘 받았어요");
-        startActivity(intent);
+//        startActivity(intent);
+
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
