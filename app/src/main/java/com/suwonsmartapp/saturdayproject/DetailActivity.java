@@ -1,32 +1,38 @@
 package com.suwonsmartapp.saturdayproject;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = DetailActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        
+
+        findViewById(R.id.result_button).setOnClickListener(this);
+
         Intent intent = getIntent();
-        String id = intent.getStringExtra("id");
+        if (intent != null) {
+            String id = intent.getStringExtra("id");
+            String email = intent.getStringExtra("email");
+            String password = intent.getStringExtra("password");
+            String sex = intent.getStringExtra("sex");
 
-        Toast.makeText(DetailActivity.this, id, Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "onCreate: " + id + ", " + email + ", " + password + ", " + sex);
+        }
 
-        findViewById(R.id.button).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("result", "id 잘 받았어요");
-//        startActivity(intent);
-
+        Intent intent = new Intent();
+        intent.putExtra("result", "확인 버튼을 누르셨습니다");
         setResult(RESULT_OK, intent);
         finish();
     }
