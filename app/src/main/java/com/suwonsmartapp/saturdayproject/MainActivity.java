@@ -1,6 +1,7 @@
 package com.suwonsmartapp.saturdayproject;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.button);
+        final Button button = (Button) findViewById(R.id.button);
         mTextView = (TextView) findViewById(R.id.text_view2);
 
         // 1 첫번째
@@ -41,7 +42,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 3
         button.setOnClickListener(this);
 
+
+        // 암시적 인텐트로 전화걸기
+        findViewById(R.id.tel_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Button button1 = (Button) view;
+                dialPhoneNumber(button1.getText().toString());
+            }
+        });
+
     }
+
+    public void dialPhoneNumber(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(MainActivity.this, "없어요", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     // 3
     @Override
