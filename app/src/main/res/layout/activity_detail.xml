@@ -81,7 +81,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/result"
+        android:id="@+id/res"
         android:text="확인"
         android:textAlignment="center"
         android:layout_width="match_parent"

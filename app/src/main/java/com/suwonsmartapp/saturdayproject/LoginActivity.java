@@ -53,14 +53,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == RESULT_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-
-                String result = data.getStringExtra("result");
-
-                Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
-            }
+        if (requestCode == RESULT_REQUEST  &&resultCode == RESULT_OK ) {
+            Toast.makeText(LoginActivity.this, data.getStringExtra("result"), Toast.LENGTH_SHORT).show();
         }
     }
 
