@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 /**
@@ -13,17 +12,21 @@ import android.widget.Toast;
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private EditText mIdEditText;
+    private EditText mPassWord;
+    private EditText mEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button init = (Button) findViewById(R.id.init);
-        Button apply = (Button) findViewById(R.id.apply);
-        apply.setOnClickListener(this);
-        init.setOnClickListener(this);
+        mIdEditText = (EditText) findViewById(R.id.id_edit);
+        mPassWord = (EditText) findViewById(R.id.password_edit);
+        mEmail = (EditText) findViewById(R.id.email);
 
-        TextView textID = (TextView) findViewById(R.id.id_edit);
+        findViewById(R.id.apply).setOnClickListener(this);
+        findViewById(R.id.init).setOnClickListener(this);
     }
 
     @Override
@@ -35,15 +38,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.apply:
 //                Toast.makeText(LoginActivity.this, "가입합니다", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(this, DetailActivity.class);
-                intent.putExtra("id", mIdEditText.getText().toString());
-                startActivityForResult(intent, 1000);
+                Intent intent = new Intent(LoginActivity.this, DetailActivity.class);
+//                intent.putExtra("id", mIdEditText.getText().toString());
+//                intent.putExtra("password", mPassWord.getText().toString());
+//                intent.putExtra("email", mEmail.getText().toString());
+
+                startActivity(intent);
                 break;
         }
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
 }
