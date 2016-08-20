@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.suwonsmartapp.saturdayproject.R;
 
@@ -39,6 +40,13 @@ public class ListExamActivity extends AppCompatActivity {
         // 2. adapter
         MyContactAdapter adaper = new MyContactAdapter(this, data);
         listView.setAdapter(adaper);
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ListExamActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     static class MyContactAdapter extends BaseAdapter {
