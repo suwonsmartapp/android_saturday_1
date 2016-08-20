@@ -31,8 +31,8 @@ public class Person {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Person{");
-        sb.append("name='").append(name).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append("title='").append(name).append('\'');
+        sb.append(", contents='").append(phoneNumber).append('\'');
         sb.append('}');
         return sb.toString();
     }

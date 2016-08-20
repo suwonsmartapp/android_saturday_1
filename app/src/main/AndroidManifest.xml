@@ -27,7 +27,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity" />
-        <activity android:name=".list.ListExamActivity"></activity>
+        <activity android:name=".list.ListExamActivity" />
+        <activity android:name=".list_exam.ListExam2Activity" />
+        <activity android:name=".list.MemoActivity"></activity>
     </application>
 
 </manifest>

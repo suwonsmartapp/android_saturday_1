@@ -1,6 +1,7 @@
 package com.suwonsmartapp.saturdayproject.list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.suwonsmartapp.saturdayproject.R;
 
@@ -23,6 +23,9 @@ import java.util.List;
  */
 public class ListExamActivity extends AppCompatActivity {
 
+    private ArrayList<Memo> mData;
+    private MemoAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,21 +35,30 @@ public class ListExamActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.list);
 
         // 1. data
-        ArrayList<Person> data = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            data.add(new Person("아무개 " + i, "0312365043"));
-        }
+        mData = new ArrayList<>();
 
         // 2. adapter
-        MyContactAdapter adaper = new MyContactAdapter(this, data);
-        listView.setAdapter(adaper);
+        mAdapter = new MemoAdapter(this, mData);
+        listView.setAdapter(mAdapter);
 
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ListExamActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ListExamActivity.this, MemoActivity.class);
+                startActivityForResult(intent, 1000);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1000 && resultCode == RESULT_OK && data != null) {
+            Memo memo = (Memo) data.getSerializableExtra("memo");
+            mData.add(0, memo);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     static class MyContactAdapter extends BaseAdapter {
