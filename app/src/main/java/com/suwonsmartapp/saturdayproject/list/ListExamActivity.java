@@ -17,6 +17,9 @@ import com.suwonsmartapp.saturdayproject.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 교재 1015 페이지 참고
+ */
 public class ListExamActivity extends AppCompatActivity {
 
     @Override
