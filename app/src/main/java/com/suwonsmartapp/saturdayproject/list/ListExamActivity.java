@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class ListExamActivity extends AppCompatActivity {
     }
 
     static class MyContactAdapter extends BaseAdapter {
+        private static final String TAG = MyContactAdapter.class.getSimpleName();
         private final Context mContext;
         private final List<Person> mData;
 
@@ -63,22 +65,37 @@ public class ListExamActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_2, parent, false);
+            Log.d(TAG, "getView: " + position + ", convertView: " + convertView);
 
-            TextView name = (TextView) convertView.findViewById(android.R.id.text1);
-            TextView phoneNumber = (TextView) convertView.findViewById(android.R.id.text2);
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_2, parent, false);
+                TextView name = (TextView) convertView.findViewById(android.R.id.text1);
+                TextView phoneNumber = (TextView) convertView.findViewById(android.R.id.text2);
 
+                viewHolder = new ViewHolder();
+                viewHolder.name = name;
+                viewHolder.phoneNumber = phoneNumber;
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
 
             Person person = mData.get(position);
 //            Person person2 = (Person) getItem(position);
 
             PhoneNumberFormattingTextWatcher watcher = new PhoneNumberFormattingTextWatcher();
 
-            name.setText(person.getName());
-            phoneNumber.addTextChangedListener(watcher);
-            phoneNumber.setText(person.getPhoneNumber());
+            viewHolder.name.setText(person.getName());
+            viewHolder.phoneNumber.addTextChangedListener(watcher);
+            viewHolder.phoneNumber.setText(person.getPhoneNumber());
 
             return convertView;
+        }
+
+        static class ViewHolder {
+            TextView name;
+            TextView phoneNumber;
         }
     }
 }
