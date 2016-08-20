@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.suwonsmartapp.saturdayproject.list.ListExamActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mTextView;
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+        findViewById(R.id.list_button).setOnClickListener(this);
+
     }
 
     public void dialPhoneNumber(String phoneNumber) {
@@ -76,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.text_view1:
+                break;
+            case R.id.list_button:
+                startActivity(new Intent(this, ListExamActivity.class));
                 break;
         }
     }
