@@ -100,9 +100,10 @@ public class LifeCycleActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy: ");
+        String changed = getString(R.string.changed);
     }
 
     public void change(View view) {
-        mTextView.setText("변경 됨");
+        mTextView.setText(R.string.changed);
     }
 }
