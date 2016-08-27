@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         findViewById(R.id.list_button).setOnClickListener(this);
+        findViewById(R.id.lifecycle_button).setOnClickListener(this);
 
     }
 
@@ -84,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.list_button:
                 startActivity(new Intent(this, ListExamActivity.class));
+                break;
+            case R.id.lifecycle_button:
+                startActivity(new Intent(this, LifeCycleActivity.class));
                 break;
         }
     }

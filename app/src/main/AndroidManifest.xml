@@ -29,7 +29,8 @@
         <activity android:name=".DetailActivity" />
         <activity android:name=".list.ListExamActivity" />
         <activity android:name=".list_exam.ListExam2Activity" />
-        <activity android:name=".list.MemoActivity"></activity>
+        <activity android:name=".list.MemoActivity" />
+        <activity android:name=".LifeCycleActivity"></activity>
     </application>
 
 </manifest>
