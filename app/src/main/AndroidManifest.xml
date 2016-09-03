@@ -3,6 +3,7 @@
     package="com.suwonsmartapp.saturdayproject">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -28,9 +29,9 @@
         </activity>
         <activity android:name=".DetailActivity" />
         <activity android:name=".list.ListExamActivity" />
-        <activity android:name=".list_exam.ListExam2Activity" />
         <activity android:name=".list.MemoActivity" />
-        <activity android:name=".LifeCycleActivity"></activity>
+        <activity android:name=".LifeCycleActivity" />
+        <activity android:name=".JsonActivity"></activity>
     </application>
 
 </manifest>

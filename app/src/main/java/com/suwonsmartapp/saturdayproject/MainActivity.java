@@ -92,4 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void json(View view) {
+        startActivity(new Intent(this, JsonActivity.class));
+    }
 }
