@@ -16,11 +16,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.suwonsmartapp.saturdayproject.models.Weather;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,21 +40,12 @@ public class WeatherActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(JSONArray response) {
-                try {
-                    ArrayList<Weather> data = new ArrayList<>();
-                    for (int i = 0; i < response.length(); i++) {
-                        String country = response.getJSONObject(i).getString("country");
-                        String temperature = response.getJSONObject(i).getString("temperature");
-                        String weather = response.getJSONObject(i).getString("weather");
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<Weather>>(){}.getType();
+                ArrayList<Weather> data = gson.fromJson(response.toString(), type);
 
-                        data.add(new Weather(country, temperature, weather));
-                    }
-
-                    WeatherAdapter adapter = new WeatherAdapter(data);
-                    listView.setAdapter(adapter);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                WeatherAdapter adapter = new WeatherAdapter(data);
+                listView.setAdapter(adapter);
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
