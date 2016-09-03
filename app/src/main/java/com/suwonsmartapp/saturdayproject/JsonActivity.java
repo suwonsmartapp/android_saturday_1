@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 public class JsonActivity extends AppCompatActivity {
 
@@ -25,7 +26,12 @@ public class JsonActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(JSONArray response) {
-                Toast.makeText(JsonActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                try {
+                    String country = response.getJSONObject(0).getString("country");
+                    Toast.makeText(JsonActivity.this, country, Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
