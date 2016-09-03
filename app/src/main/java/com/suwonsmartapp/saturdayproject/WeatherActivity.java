@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WeatherActivity extends AppCompatActivity {
 
@@ -69,10 +70,18 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     private static class WeatherAdapter extends BaseAdapter {
+        private HashMap<String, Integer> mImageMap = new HashMap<>();
+
         private ArrayList<Weather> mData;
 
         public WeatherAdapter(ArrayList<Weather> data) {
             mData = data;
+
+            mImageMap.put("비", R.drawable.rainy);
+            mImageMap.put("맑음", R.drawable.sunny);
+            mImageMap.put("눈", R.drawable.snow);
+            mImageMap.put("흐림", R.drawable.cloudy);
+            mImageMap.put("우박", R.drawable.blizzard);
         }
 
         @Override
@@ -113,6 +122,7 @@ public class WeatherActivity extends AppCompatActivity {
 
             // 데이터 셋팅
             Weather weather = mData.get(position);
+            holder.image.setImageResource(mImageMap.get(weather.getWeather()));
             holder.country.setText(weather.getCountry());
             holder.temperature.setText(weather.getTemperature());
 
