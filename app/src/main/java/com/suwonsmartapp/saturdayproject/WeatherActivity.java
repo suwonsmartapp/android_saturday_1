@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +13,9 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.suwonsmartapp.saturdayproject.models.Weather;
 
 import org.json.JSONArray;
@@ -70,18 +71,18 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     private static class WeatherAdapter extends BaseAdapter {
-        private HashMap<String, Integer> mImageMap = new HashMap<>();
+        private HashMap<String, String> mImageMap = new HashMap<>();
 
         private ArrayList<Weather> mData;
 
         public WeatherAdapter(ArrayList<Weather> data) {
             mData = data;
 
-            mImageMap.put("비", R.drawable.rainy);
-            mImageMap.put("맑음", R.drawable.sunny);
-            mImageMap.put("눈", R.drawable.snow);
-            mImageMap.put("흐림", R.drawable.cloudy);
-            mImageMap.put("우박", R.drawable.blizzard);
+            mImageMap.put("비", "http://suwonsmartapp.iptime.org/test/junsuk/rainy.png");
+            mImageMap.put("맑음", "http://suwonsmartapp.iptime.org/test/junsuk/sunny.png");
+            mImageMap.put("눈", "http://suwonsmartapp.iptime.org/test/junsuk/snow.png");
+            mImageMap.put("흐림", "http://suwonsmartapp.iptime.org/test/junsuk/cloudy.png");
+            mImageMap.put("우박", "http://suwonsmartapp.iptime.org/test/junsuk/blizzard.png");
         }
 
         @Override
@@ -101,12 +102,12 @@ public class WeatherActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
+            final ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
                 // 최초
                 convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weather, parent, false);
-                ImageView image = (ImageView) convertView.findViewById(R.id.image_view);
+                NetworkImageView image = (NetworkImageView) convertView.findViewById(R.id.image_view);
                 TextView country = (TextView) convertView.findViewById(R.id.country);
                 TextView temperature = (TextView) convertView.findViewById(R.id.temperature);
 
@@ -122,7 +123,16 @@ public class WeatherActivity extends AppCompatActivity {
 
             // 데이터 셋팅
             Weather weather = mData.get(position);
-            holder.image.setImageResource(mImageMap.get(weather.getWeather()));
+//            holder.image.setImageResource(mImageMap.get(weather.getWeather()));
+            // 이미지를 다운로드 -> Bitmap 변환 -> ImageView에 표시
+
+            // Retrieves an image specified by the URL, displays it in the UI.
+            String url = mImageMap.get(weather.getWeather());
+
+            ImageLoader imageLoader = MySingleton.getInstance(parent.getContext()).getImageLoader();
+            holder.image.setImageUrl(url, imageLoader);
+
+
             holder.country.setText(weather.getCountry());
             holder.temperature.setText(weather.getTemperature());
 
@@ -130,7 +140,7 @@ public class WeatherActivity extends AppCompatActivity {
         }
 
         static class ViewHolder {
-            ImageView image;
+            NetworkImageView image;
             TextView country;
             TextView temperature;
         }
