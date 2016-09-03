@@ -9,8 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.suwonsmartapp.saturdayproject.models.Weather;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -21,16 +29,42 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        ListView listView = (ListView) findViewById(R.id.list_view);
+        final ListView listView = (ListView) findViewById(R.id.list_view);
 
-        ArrayList<Weather> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            data.add(new Weather("test" + i, "10", "맑음"));
-        }
+        String url = "http://suwonsmartapp.iptime.org/test/junsuk/weather.json";
+        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
 
-        WeatherAdapter adapter = new WeatherAdapter(data);
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    ArrayList<Weather> data = new ArrayList<>();
+                    for (int i = 0; i < response.length(); i++) {
+                        String country = response.getJSONObject(i).getString("country");
+                        String temperature = response.getJSONObject(i).getString("temperature");
+                        String weather = response.getJSONObject(i).getString("weather");
 
-        listView.setAdapter(adapter);
+                        data.add(new Weather(country, temperature, weather));
+                    }
+
+                    WeatherAdapter adapter = new WeatherAdapter(data);
+                    listView.setAdapter(adapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(WeatherActivity.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, url, null, responseListener, errorListener);
+
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+
 
     }
 
