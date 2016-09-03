@@ -95,4 +95,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void json(View view) {
         startActivity(new Intent(this, JsonActivity.class));
     }
+
+    public void weather(View view) {
+        startActivity(new Intent(this, WeatherActivity.class));
+    }
 }

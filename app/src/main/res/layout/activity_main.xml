@@ -34,6 +34,13 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="weather"
+            android:text="Weather" />
+
+        <Button
             android:id="@+id/json"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
