@@ -34,6 +34,13 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/memo"
+            android:text="메모장"
+            android:onClick="memo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
             android:id="@+id/weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

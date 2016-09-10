@@ -32,7 +32,9 @@
         <activity android:name=".list.MemoActivity" />
         <activity android:name=".LifeCycleActivity" />
         <activity android:name=".JsonActivity" />
-        <activity android:name=".WeatherActivity"></activity>
+        <activity android:name=".WeatherActivity" />
+        <activity android:name=".db.MemoActivity" />
+        <activity android:name=".db.MemoDetailActivity"></activity>
     </application>
 
 </manifest>

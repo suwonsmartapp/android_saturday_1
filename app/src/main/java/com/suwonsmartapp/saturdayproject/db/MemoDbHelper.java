@@ -7,20 +7,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by junsuk on 16. 9. 10..
  */
-public class StudentMangerDbHelper extends SQLiteOpenHelper {
+public class MemoDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "StudentManger.db";
+    public static final String DATABASE_NAME = "Memo.db";
 
     // CREATE TABLE student (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, dept_no TEXT NOT NULL)
-    private static final String SQL_CREATE_ENTRIES = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL, %s TEXT NOT NULL)",
-            StudentManagerContract.StudentEntry.TABLE_NAME,
-            StudentManagerContract.StudentEntry._ID,
-            StudentManagerContract.StudentEntry.COLUMN_NAME_NAME,
-            StudentManagerContract.StudentEntry.COLUMN_NAME_DEPT_NO);
+    private static final String SQL_CREATE_ENTRIES = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT DEFAULT '제목 없음', %s TEXT)",
+            MemoContract.MemoEntry.TABLE_NAME,
+            MemoContract.MemoEntry._ID,
+            MemoContract.MemoEntry.COLUMN_NAME_TITLE,
+            MemoContract.MemoEntry.COLUMN_NAME_CONTENTS);
 
 
-    public StudentMangerDbHelper(Context context) {
+    public MemoDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
