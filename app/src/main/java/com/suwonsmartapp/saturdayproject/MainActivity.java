@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.suwonsmartapp.saturdayproject.db.MemoActivity;
 import com.suwonsmartapp.saturdayproject.list.ListExamActivity;
+import com.suwonsmartapp.saturdayproject.provider.ProviderActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -103,5 +104,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void memo(View view) {
         startActivity(new Intent(this, MemoActivity.class));
+    }
+
+    public void provider(View view) {
+        startActivity(new Intent(this, ProviderActivity.class));
     }
 }
