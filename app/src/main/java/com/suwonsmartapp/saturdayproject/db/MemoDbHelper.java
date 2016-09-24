@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MemoDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "Memo.db";
 
     // CREATE TABLE student (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, dept_no TEXT NOT NULL)
@@ -32,6 +32,14 @@ public class MemoDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // DB 스키마가 변경되었을 때, 업그레이드 처리
+
+        // 기존 데이타 백업
+
+        // 테이블 삭제
+
+        // 테이블 다시 만들기
+
+        // 데이타 복원
     }
 
 }

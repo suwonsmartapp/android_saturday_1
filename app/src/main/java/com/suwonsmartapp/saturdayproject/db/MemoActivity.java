@@ -40,6 +40,8 @@ public class MemoActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.memo_list);
 
+        // SELECT * FROM memo ORDER BY _id DESC
+//        Cursor cursor = mDbHelper.getReadableDatabase().execSQL("SELECT * FROM memo ORDER BY _id DESC");
         Cursor cursor = mDbHelper.getReadableDatabase().query(
                 MemoContract.MemoEntry.TABLE_NAME,
                 null,
@@ -73,6 +75,7 @@ public class MemoActivity extends AppCompatActivity {
             values.put(MemoContract.MemoEntry.COLUMN_NAME_CONTENTS, contents);
 
             // Insert the new row, returning the primary key value of the new row
+            // INSERT INTO memo (title, contents) VALUES (?, ?)
             long newRowId;
             newRowId = db.insert(
                     MemoContract.MemoEntry.TABLE_NAME,
@@ -90,6 +93,18 @@ public class MemoActivity extends AppCompatActivity {
                         null,
                         "_id DESC"
                 );
+
+//                List<Memo> memoList = new ArrayList<>();
+//                cursor.moveToFirst();   // -1
+//                while (cursor.moveToNext()) {
+//                    Log.d("DB", "onActivityResult: " + cursor.getString(cursor.getColumnIndex("title")));
+//
+//                    Memo memo = new Memo();
+//                    memo.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+//                    memo.setContents(cursor.getString(cursor.getColumnIndex("contents")));
+//                    memoList.add(memo);
+//                }
+
                 mAdapter.swapCursor(cursor);        // baseAdapter 의 notifyDatasetChanged 역할
                 Toast.makeText(MemoActivity.this, "insert 성공" + newRowId, Toast.LENGTH_SHORT).show();
             } else {
