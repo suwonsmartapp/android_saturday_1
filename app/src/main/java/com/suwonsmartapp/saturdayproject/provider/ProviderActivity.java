@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +17,10 @@ import android.widget.TextView;
 
 import com.suwonsmartapp.saturdayproject.R;
 
-public class ProviderActivity extends AppCompatActivity {
+public class ProviderActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+
+
+    private ContactsCursorAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +29,32 @@ public class ProviderActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.list_view);
 
+        mAdapter = new ContactsCursorAdapter(this, null);
 
-        Cursor cursor = getContentResolver().query(ContactsContract.Data.CONTENT_URI,
+        listView.setAdapter(mAdapter);
+
+        // 커서 로더 시작
+        getSupportLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this,
+                ContactsContract.Data.CONTENT_URI,
                 null,
                 null,
                 null,
                 null);
+    }
 
-        ContactsCursorAdapter adapter = new ContactsCursorAdapter(this, cursor);
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
 
-        listView.setAdapter(adapter);
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
     }
 
     private class ContactsCursorAdapter extends CursorAdapter {
