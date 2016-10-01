@@ -1,8 +1,10 @@
 package com.suwonsmartapp.saturdayproject.db;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,11 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.suwonsmartapp.saturdayproject.R;
+import com.suwonsmartapp.saturdayproject.receiver.MyReceiver;
 
 public class MemoActivity extends AppCompatActivity {
 
     private MemoCursorAdapter mAdapter;
     private MemoDbHelper mDbHelper;
+    private BroadcastReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,25 @@ public class MemoActivity extends AppCompatActivity {
         mAdapter = new MemoCursorAdapter(this, cursor);
 
         listView.setAdapter(mAdapter);
+
+
+        mReceiver = new MyReceiver();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_BATTERY_LOW);
+        registerReceiver(mReceiver, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(mReceiver);
     }
 
     @Override
