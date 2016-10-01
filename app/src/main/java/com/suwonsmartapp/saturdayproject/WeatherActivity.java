@@ -1,6 +1,10 @@
 package com.suwonsmartapp.saturdayproject;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,28 +12,25 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.suwonsmartapp.saturdayproject.models.Weather;
 
-import org.json.JSONArray;
-
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class WeatherActivity extends AppCompatActivity {
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class WeatherActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Weather>> {
 
     private WeatherAdapter mAdapter;
-    private ArrayList<Weather> mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,44 +39,68 @@ public class WeatherActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.list_view);
 
-        loadWeatherData();
-
-        mAdapter = new WeatherAdapter(mData);
+        mAdapter = new WeatherAdapter(null);
         listView.setAdapter(mAdapter);
+
+        // 로더 시작
+        getSupportLoaderManager().initLoader(0, null, this);
     }
 
-    private void loadWeatherData() {
-        String url = "http://suwonsmartapp.iptime.org/test/junsuk/weather.json";
-        Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
+    @Override
+    public Loader<ArrayList<Weather>> onCreateLoader(int id, Bundle args) {
+        return new WeatherAsyncTaskLoader(this);
+    }
 
-            @Override
-            public void onResponse(JSONArray response) {
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Weather>> loader, ArrayList<Weather> data) {
+        mAdapter.swapData(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Weather>> loader) {
+        mAdapter.swapData(null);
+    }
+
+    private static class WeatherAsyncTaskLoader extends AsyncTaskLoader<ArrayList<Weather>> {
+        private OkHttpClient client = new OkHttpClient();
+
+        private ArrayList<Weather> mData;
+
+        public WeatherAsyncTaskLoader(Context context) {
+            super(context);
+            forceLoad();
+        }
+
+        @Override
+        public ArrayList<Weather> loadInBackground() {
+            try {
+                String result = run("http://suwonsmartapp.iptime.org/test/junsuk/weather.json");
                 Gson gson = new Gson();
                 Type type = new TypeToken<ArrayList<Weather>>(){}.getType();
-                mData = gson.fromJson(response.toString(), type);
-
-                mAdapter.swapData(mData);
+                mData = gson.fromJson(result, type);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        };
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            return mData;
+        }
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(WeatherActivity.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        };
+        private String run(String url) throws IOException {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
 
-        JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, url, null, responseListener, errorListener);
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        }
 
-        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
     }
 
     private static class WeatherAdapter extends BaseAdapter {
         private HashMap<String, String> mImageMap = new HashMap<>();
 
-        private ArrayList<Weather> mData;
+        private ArrayList<com.suwonsmartapp.saturdayproject.models.Weather> mData;
 
-        public WeatherAdapter(ArrayList<Weather> data) {
+        public WeatherAdapter(ArrayList<com.suwonsmartapp.saturdayproject.models.Weather> data) {
             mData = data;
 
             mImageMap.put("비", "http://suwonsmartapp.iptime.org/test/junsuk/rainy.png");
