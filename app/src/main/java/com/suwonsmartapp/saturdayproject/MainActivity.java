@@ -109,4 +109,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void provider(View view) {
         startActivity(new Intent(this, ProviderActivity.class));
     }
+
+    public void broadcast(View view) {
+        Intent intent = new Intent();
+        intent.setAction("com.suwonsmartapp.saturdayproject.action.TEST_BROADCAST");
+        sendBroadcast(intent);
+    }
 }

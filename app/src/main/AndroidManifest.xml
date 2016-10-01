@@ -36,7 +36,17 @@
         <activity android:name=".WeatherActivity" />
         <activity android:name=".db.MemoActivity" />
         <activity android:name=".db.MemoDetailActivity" />
-        <activity android:name=".provider.ProviderActivity"></activity>
+        <activity android:name=".provider.ProviderActivity" />
+
+        <receiver
+            android:name=".receiver.MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.suwonsmartapp.saturdayproject.action.TEST_BROADCAST" />
+                <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
