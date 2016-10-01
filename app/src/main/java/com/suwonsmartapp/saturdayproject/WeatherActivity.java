@@ -28,13 +28,23 @@ import java.util.HashMap;
 
 public class WeatherActivity extends AppCompatActivity {
 
+    private WeatherAdapter mAdapter;
+    private ArrayList<Weather> mData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        final ListView listView = (ListView) findViewById(R.id.list_view);
+        ListView listView = (ListView) findViewById(R.id.list_view);
 
+        loadWeatherData();
+
+        mAdapter = new WeatherAdapter(mData);
+        listView.setAdapter(mAdapter);
+    }
+
+    private void loadWeatherData() {
         String url = "http://suwonsmartapp.iptime.org/test/junsuk/weather.json";
         Response.Listener<JSONArray> responseListener = new Response.Listener<JSONArray>() {
 
@@ -42,10 +52,9 @@ public class WeatherActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 Gson gson = new Gson();
                 Type type = new TypeToken<ArrayList<Weather>>(){}.getType();
-                ArrayList<Weather> data = gson.fromJson(response.toString(), type);
+                mData = gson.fromJson(response.toString(), type);
 
-                WeatherAdapter adapter = new WeatherAdapter(data);
-                listView.setAdapter(adapter);
+                mAdapter.swapData(mData);
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
@@ -59,8 +68,6 @@ public class WeatherActivity extends AppCompatActivity {
         JsonArrayRequest jsObjRequest = new JsonArrayRequest(Request.Method.GET, url, null, responseListener, errorListener);
 
         MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
-
-
     }
 
     private static class WeatherAdapter extends BaseAdapter {
@@ -78,8 +85,16 @@ public class WeatherActivity extends AppCompatActivity {
             mImageMap.put("우박", "http://suwonsmartapp.iptime.org/test/junsuk/blizzard.png");
         }
 
+        public void swapData(ArrayList<Weather> data) {
+            mData = data;
+            notifyDataSetChanged();
+        }
+
         @Override
         public int getCount() {
+            if (mData == null) {
+                return 0;
+            }
             return mData.size();
         }
 
