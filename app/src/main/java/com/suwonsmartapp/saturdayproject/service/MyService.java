@@ -14,6 +14,16 @@ import java.util.Random;
 public class MyService extends Service {
     private static String TAG = MyService.class.getSimpleName();
 
+    public interface MyServiceListener {
+        void onFinished(int randomNumber);
+    }
+
+    MyServiceListener mListener;
+
+    public void setOnMyServiceListener(MyServiceListener listener) {
+        mListener = listener;
+    }
+
     public MyService() {
     }
 
@@ -35,6 +45,9 @@ public class MyService extends Service {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                }
+                if (mListener != null) {
+                    mListener.onFinished(randomNumber());
                 }
             }
         }).start();

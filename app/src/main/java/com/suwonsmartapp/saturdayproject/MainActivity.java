@@ -20,7 +20,7 @@ import com.suwonsmartapp.saturdayproject.provider.ProviderActivity;
 import com.suwonsmartapp.saturdayproject.service.MyIntentService;
 import com.suwonsmartapp.saturdayproject.service.MyService;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MyService.MyServiceListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private TextView mTextView;
@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             MyService.MyServiceBinder binder = (MyService.MyServiceBinder) service;
             mService = binder.getService();
+            mService.setOnMyServiceListener(MainActivity.this);
             mBound = true;
         }
 
@@ -181,5 +182,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mBound) {
             Log.d(TAG, "bindService: " + mService.randomNumber());
         }
+    }
+
+    @Override
+    public void onFinished(int randomNumber) {
+        Log.d(TAG, "onFinished: " + randomNumber);
     }
 }
