@@ -34,6 +34,13 @@
         android:orientation="vertical">
 
         <Button
+            android:text="Intent Service"
+            android:textAllCaps="false"
+            android:onClick="intentService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
             android:text="Started Service"
             android:textAllCaps="false"
             android:onClick="startedService"
