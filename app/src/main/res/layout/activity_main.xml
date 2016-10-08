@@ -34,6 +34,13 @@
         android:orientation="vertical">
 
         <Button
+            android:text="Foreground Service"
+            android:textAllCaps="false"
+            android:onClick="foregroundService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
             android:text="Bind Service"
             android:textAllCaps="false"
             android:onClick="bindService"

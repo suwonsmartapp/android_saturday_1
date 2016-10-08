@@ -188,4 +188,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onFinished(int randomNumber) {
         Log.d(TAG, "onFinished: " + randomNumber);
     }
+
+    public void foregroundService(View view) {
+        Intent intent = new Intent(this, MyService.class);
+        intent.setAction("foreground");
+        startService(intent);
+    }
 }

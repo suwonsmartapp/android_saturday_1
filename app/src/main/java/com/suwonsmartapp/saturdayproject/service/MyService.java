@@ -2,9 +2,16 @@ package com.suwonsmartapp.saturdayproject.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+
+import com.suwonsmartapp.saturdayproject.R;
 
 import java.util.Random;
 
@@ -33,6 +40,21 @@ public class MyService extends Service {
 
         if (intent.getAction().equals("randomNumber")) {
             randomNumber();
+        } else if (intent.getAction().equals("foreground")) {
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setContentTitle("서비스 실행 중");
+            builder.setContentText("포어그라운드 서비스 ...");
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            builder.setLargeIcon(bitmap);
+            builder.setColor(Color.RED);
+            builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+            builder.setVibrate(new long[] {1000, 2000, 3000});
+
+            startForeground(1, builder.build());
+
+            return START_REDELIVER_INTENT;
         }
 
         new Thread(new Runnable() {
