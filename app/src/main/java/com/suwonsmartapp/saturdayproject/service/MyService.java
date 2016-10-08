@@ -1,5 +1,6 @@
 package com.suwonsmartapp.saturdayproject.service;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.suwonsmartapp.saturdayproject.R;
+import com.suwonsmartapp.saturdayproject.db.MemoActivity;
 
 import java.util.Random;
 
@@ -51,6 +53,10 @@ public class MyService extends Service {
             builder.setColor(Color.RED);
             builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
             builder.setVibrate(new long[] {1000, 2000, 3000});
+
+            Intent activityIntent = new Intent(this, MemoActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 1000, activityIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            builder.setContentIntent(pendingIntent);
 
             startForeground(1, builder.build());
 
