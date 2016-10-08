@@ -1,9 +1,14 @@
 package com.suwonsmartapp.saturdayproject;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +22,7 @@ import com.suwonsmartapp.saturdayproject.service.MyService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private TextView mTextView;
 
     @Override
@@ -118,14 +124,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sendBroadcast(intent);
     }
 
+    private MyService mService;
+    boolean mBound = false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Bind to LocalService
+        Intent intent = new Intent(this, MyService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // Unbind from the service
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+    }
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            MyService.MyServiceBinder binder = (MyService.MyServiceBinder) service;
+            mService = binder.getService();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+
     public void startedService(View view) {
         Intent intent = new Intent(this, MyService.class);
         intent.putExtra("message", "test");
+        intent.setAction("randomNumber");
         startService(intent);
     }
 
     public void intentService(View view) {
         Intent intent = new Intent(this, MyIntentService.class);
         startService(intent);
+    }
+
+    public void bindService(View view) {
+        if (mBound) {
+            Log.d(TAG, "bindService: " + mService.randomNumber());
+        }
     }
 }
