@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.suwonsmartapp.saturdayproject.db.MemoActivity;
 import com.suwonsmartapp.saturdayproject.list.ListExamActivity;
 import com.suwonsmartapp.saturdayproject.provider.ProviderActivity;
+import com.suwonsmartapp.saturdayproject.service.MyService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -114,5 +115,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent();
         intent.setAction("com.suwonsmartapp.saturdayproject.action.TEST_BROADCAST");
         sendBroadcast(intent);
+    }
+
+    public void startedService(View view) {
+        Intent intent = new Intent(this, MyService.class);
+        intent.putExtra("message", "test");
+        startService(intent);
     }
 }
