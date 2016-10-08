@@ -8,11 +8,10 @@
     <TextView
         android:id="@+id/text_view1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_weight="1"
         android:text="happy birthday"
         android:textSize="40sp" />
 
@@ -28,99 +27,105 @@
         android:text="to you"
         android:textSize="40sp" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:text="Foreground Service"
-            android:textAllCaps="false"
-            android:onClick="foregroundService"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:text="Bind Service"
-            android:textAllCaps="false"
-            android:onClick="bindService"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:text="Intent Service"
-            android:textAllCaps="false"
-            android:onClick="intentService"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:text="Started Service"
-            android:textAllCaps="false"
-            android:onClick="startedService"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/broadcast"
-            android:text="브로드캐스트"
-            android:onClick="broadcast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/provider"
-            android:text="Provider"
-            android:onClick="provider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/memo"
-            android:text="메모장"
-            android:onClick="memo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/weather"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="weather"
-            android:text="Weather" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/json"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="json"
-            android:text="Json" />
+            <Button
+                android:text="Foreground Service"
+                android:textAllCaps="false"
+                android:onClick="foregroundService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="버튼" />
+            <Button
+                android:text="Bind Service"
+                android:textAllCaps="false"
+                android:onClick="bindService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/tel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0312365043" />
+            <Button
+                android:text="Intent Service"
+                android:textAllCaps="false"
+                android:onClick="intentService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/list_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="리스트뷰" />
+            <Button
+                android:text="Started Service"
+                android:textAllCaps="false"
+                android:onClick="startedService"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/lifecycle_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="생명주기" />
+            <Button
+                android:id="@+id/broadcast"
+                android:text="브로드캐스트"
+                android:onClick="broadcast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/provider"
+                android:text="Provider"
+                android:onClick="provider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/memo"
+                android:text="메모장"
+                android:onClick="memo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="weather"
+                android:text="Weather" />
+
+            <Button
+                android:id="@+id/json"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="json"
+                android:text="Json" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="버튼" />
+
+            <Button
+                android:id="@+id/tel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0312365043" />
+
+            <Button
+                android:id="@+id/list_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="리스트뷰" />
+
+            <Button
+                android:id="@+id/lifecycle_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="생명주기" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>

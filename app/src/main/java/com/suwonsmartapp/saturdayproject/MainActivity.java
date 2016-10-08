@@ -144,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
+
+            stopService(new Intent(this, MyService.class));
         }
     }
 
